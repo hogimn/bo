@@ -30,7 +30,7 @@ os:=${shell uname -s}
 #
 #******************************************************************************
 ifndef TOOLROOT
-TOOLROOT=${HOME}/arm-2013.11
+TOOLROOT=${shell pwd}/../../../bin/arm-2013.11
 endif
 
 #******************************************************************************
@@ -53,7 +53,7 @@ ifeq (${COMPILER}, gcc)
 # Get the prefix for the tools to use.  Use arm-stellaris-eabi if it exists,
 # otherwise fall back to arm-none-eabi.
 #
-PREFIX=${shell type arm-eabi-gcc > /dev/null 2>&1 && \
+PREFIX=${TOOLROOT}/bin/${shell type arm-eabi-gcc > /dev/null 2>&1 && \
          echo arm-stellaris-eabi || echo arm-none-eabi}
 # PREFIX=arm-eabi
 
@@ -154,10 +154,10 @@ OBJCOPY=${PREFIX}-objcopy
 # Tell the compiler to include debugging information if the DEBUG environment
 # variable is set.
 #
-ifdef DEBUG
-CFLAGS+=-g -D DEBUG
-AFLAGS+=-g -D DEBUG
-endif
+#ifdef DEBUG
+CFLAGS+=-g -D DEBUG=1
+AFLAGS+=-g -D DEBUG=1
+#endif
 
 #
 # Add the tool specific CFLAGS.
